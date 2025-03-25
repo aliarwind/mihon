@@ -69,6 +69,7 @@
     <string name="action_sort_latest_chapter">Latest chapter</string>
     <string name="action_sort_chapter_fetch_date">Chapter fetch date</string>
     <string name="action_sort_date_added">Date added</string>
+    <string name="action_sort_author">Author</string>
     <string name="action_sort_tracker_score">Tracker score</string>
     <string name="action_sort_random">Random</string>
     <string name="action_search">Search</string>

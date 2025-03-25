@@ -296,6 +296,9 @@ class LibraryScreenModel(
                 LibrarySort.Type.DateAdded -> {
                     i1.libraryManga.manga.dateAdded.compareTo(i2.libraryManga.manga.dateAdded)
                 }
+                LibrarySort.Type.Author -> {
+                    compareValues(i1.libraryManga.manga.author, i2.libraryManga.manga.author)
+                }
                 LibrarySort.Type.TrackerMean -> {
                     val item1Score = trackerScores[i1.libraryManga.id] ?: defaultTrackerScoreSortValue
                     val item2Score = trackerScores[i2.libraryManga.id] ?: defaultTrackerScoreSortValue

@@ -394,6 +394,7 @@
     <string name="pref_category_reading_mode">閱讀模式</string>
     <string name="pref_category_theme">主題</string>
     <string name="action_sort_date_added">收藏日期</string>
+    <string name="action_sort_author">作者</string>
     <string name="loader_not_implemented_error">找不到來源</string>
     <string name="no_pinned_sources">你尚未釘選任何來源</string>
     <string name="page_list_empty_error">沒有任何頁面</string>
