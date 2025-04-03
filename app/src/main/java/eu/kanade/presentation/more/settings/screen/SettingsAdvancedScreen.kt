@@ -1,5 +1,6 @@
 package eu.kanade.presentation.more.settings.screen
 
+import SelectiveTableDbHelper
 import android.annotation.SuppressLint
 import android.content.ActivityNotFoundException
 import android.content.Intent
@@ -22,11 +23,13 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.core.net.toUri
+import app.cash.sqldelight.db.SqlDriver
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import eu.kanade.domain.base.BasePreferences
 import eu.kanade.domain.extension.interactor.TrustExtension
 import eu.kanade.presentation.more.settings.Preference
+import eu.kanade.presentation.more.settings.screen.advanced.AuthorInfoDatabaseScreen
 import eu.kanade.presentation.more.settings.screen.advanced.ClearDatabaseScreen
 import eu.kanade.presentation.more.settings.screen.debug.DebugInfoScreen
 import eu.kanade.tachiyomi.data.download.DownloadCache
@@ -56,6 +59,8 @@ import eu.kanade.tachiyomi.util.system.toast
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.persistentMapOf
 import kotlinx.collections.immutable.toImmutableMap
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import logcat.LogPriority
 import okhttp3.Headers
@@ -190,6 +195,19 @@ object SettingsAdvancedScreen : SearchableSettings {
                     title = stringResource(MR.strings.pref_clear_database),
                     subtitle = stringResource(MR.strings.pref_clear_database_summary),
                     onClick = { navigator.push(ClearDatabaseScreen()) },
+                ),
+                Preference.PreferenceItem.TextPreference(
+                    title = "導入作者信息",
+                    onClick = {
+                        Author
+                        CoroutineScope(Dispatchers.IO).launch {
+                            val selectiveTableDbHelper = SelectiveTableDbHelper(context, Injekt.get())
+                            selectiveTableDbHelper.copySelectedTables()
+                        } },
+                ),
+                Preference.PreferenceItem.TextPreference(
+                    title = "作者列表",
+                    onClick = { navigator.push(AuthorInfoDatabaseScreen()) },
                 ),
             ),
         )

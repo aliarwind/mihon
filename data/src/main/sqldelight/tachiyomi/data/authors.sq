@@ -1,0 +1,67 @@
+import kotlin.String;
+import kotlin.collections.List;
+
+CREATE TABLE authors (
+  _id INTEGER NOT NULL PRIMARY KEY,
+  name TEXT NOT NULL,
+  name_cn TEXT,
+  aliases TEXT AS List<String>,
+  gender TEXT,
+  careers TEXT AS List<String>,
+  thumbnail_url TEXT,
+  description TEXT,
+  source_author_id INTEGER,
+  source TEXT,
+  date_added INTEGER,
+  last_update INTEGER
+);
+
+insert:
+INSERT INTO
+authors(name, name_cn,aliases, gender, careers, thumbnail_url, description, source_author_id, source, date_added, last_update)
+VALUES(:name, :nameCn, :aliases, :gender, :careers,:thumbnailUrl, :description, :sourceAuthorId, :source, :dateAdd, :lastUpdate);
+
+update:
+UPDATE authors
+SET
+  name = COALESCE(:name, name),
+  name_cn = COALESCE(:nameCn, name_cn),
+  aliases = CASE WHEN :aliases IS NOT NULL THEN :aliases ELSE aliases END,
+  gender = COALESCE(:gender, gender),
+  careers = CASE WHEN :careers IS NOT NULL THEN :careers ELSE careers END,
+  thumbnail_url = COALESCE(:thumbnailUrl, thumbnail_url),
+  description = COALESCE(:description, description),
+  source_author_id = COALESCE(:sourceAuthorId, source_author_id),
+  source = COALESCE(:source, source),
+  last_update = :last_update  -- 总是更新最后修改时间
+WHERE _id = :id
+;
+
+fuzzySearchByName:
+SELECT * FROM authors
+WHERE name LIKE '%' || :name || '%'
+OR aliases LIKE '%' || :name || '%'
+;
+
+getAllAuthors:
+SELECT * FROM authors
+;
+
+getAuthorBySource:
+SELECT * FROM authors WHERE source_author_id = :sourceAuthorId AND source = :source
+;
+
+getById:
+SELECT * FROM authors WHERE _id = :id
+;
+
+count:
+SELECT COUNT(1) FROM authors
+;
+
+getLast:
+SELECT * FROM authors ORDER BY _id DESC LIMIT 1
+;
+
+selectLastInsertedRowId:
+SELECT last_insert_rowid();

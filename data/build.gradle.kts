@@ -33,6 +33,6 @@ dependencies {
     implementation(projects.sourceApi)
     implementation(projects.domain)
     implementation(projects.core.common)
-
+    implementation(libs.bundles.test)
     api(libs.bundles.sqldelight)
 }

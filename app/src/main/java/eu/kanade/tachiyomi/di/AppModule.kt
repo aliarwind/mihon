@@ -28,6 +28,7 @@ import nl.adaptivity.xmlutil.core.XmlVersion
 import nl.adaptivity.xmlutil.serialization.XML
 import tachiyomi.core.common.storage.AndroidStorageFolderProvider
 import tachiyomi.data.AndroidDatabaseHandler
+import tachiyomi.data.Authors
 import tachiyomi.data.Database
 import tachiyomi.data.DatabaseHandler
 import tachiyomi.data.DateColumnAdapter
@@ -86,6 +87,10 @@ class AppModule(val app: Application) : InjektModule {
                     genreAdapter = StringListColumnAdapter,
                     update_strategyAdapter = UpdateStrategyColumnAdapter,
                 ),
+                authorsAdapter = Authors.Adapter(
+                    aliasesAdapter = StringListColumnAdapter,
+                    careersAdapter = StringListColumnAdapter
+                )
             )
         }
         addSingletonFactory<DatabaseHandler> { AndroidDatabaseHandler(get(), get()) }

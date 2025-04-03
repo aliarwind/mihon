@@ -27,7 +27,7 @@ android {
         applicationId = "app.mihon"
 
         versionCode = 11
-        versionName = "0.18.0"
+        versionName = "0.18.0.1"
 
         buildConfigField("String", "COMMIT_COUNT", "\"${getCommitCount()}\"")
         buildConfigField("String", "COMMIT_SHA", "\"${getGitSha()}\"")
@@ -86,6 +86,9 @@ android {
 
             matchingFallbacks.addAll(commonMatchingFallbacks)
         }
+        create("customDebugType") {
+            isDebuggable = true
+        }
     }
 
     sourceSets {
@@ -98,7 +101,8 @@ android {
             isEnable = true
             isUniversalApk = true
             reset()
-            include("armeabi-v7a", "arm64-v8a", "x86", "x86_64")
+            include("arm64-v8a")
+//            include("armeabi-v7a", "arm64-v8a", "x86", "x86_64")
         }
     }
 
@@ -126,6 +130,10 @@ android {
                 "META-INF/LICENSE",
                 "META-INF/NOTICE",
                 "META-INF/README.md",
+                "META-INF/LICENSE.md",
+                "META-INF/LICENSE-notice.md",
+                "META-INF/AL2.0",
+                "META-INF/LGPL2.1"
             )
         }
     }
